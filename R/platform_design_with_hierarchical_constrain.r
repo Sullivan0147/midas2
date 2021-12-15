@@ -169,41 +169,34 @@ hc_platform <- function(seed,p,p_tox){
 
 
     ############   亚组分析   ##########
-    eff.est.sub <- matrix(NA,length(indx)+1,4)
-    rownames(eff.est.sub) <- c("control",paste("arm",indx,sep=""))
-    colnames(eff.est.sub) <-c("subgroup1","subgroup2","subgroup3","subgroup4")
+    eff.est.sub <- matrix(NA,length(indx)+1,4,dimnames = list(c("control",paste("arm",indx,sep="")),c("subgroup1","subgroup2","subgroup3","subgroup4")))
     for(i in 1:(length(indx)+1)){
       for(j in 1:4){
         eff.est.sub[i,j] <- mean(p[i,j,])
       }
     }
 
-    subgroup <- matrix(NA,length(indx),4)
-    rownames(subgroup) <- paste("arm",indx,sep="")
-    colnames(subgroup) <-c("subgroup1","subgroup2","subgroup3","subgroup4")
+    subgroup <- matrix(NA,length(indx),4,dimnames = list(paste("arm",indx,sep=""),c("subgroup1","subgroup2","subgroup3","subgroup4")))
     for(i in 1:(length(indx))){
       for(j in 1:4){
         subgroup[i,j] <- mean(p[i+1,j,]>p[1,j,])
       }
     }
     ############   signature分析   ##########
-    eff.est.sig <- matrix(NA,length(indx)+1,4)
-    rownames(eff.est.sig) <- c("control",paste("arm",indx,sep=""))
-    colnames(eff.est.sig) <- c("subgroup1","subgroup2","subgroup3","subgroup4")
+    eff.est.sig <- matrix(NA,length(indx)+1,4,dimnames = list(c("control",paste("arm",indx,sep="")),c("signature1","signature2","signature3","signature4")))
     for(i in 1:(length(indx)+1)){
       for(j in 1:4){
         eff.est.sig[i,j] <- mean(p_s[i,j,])
       }
     }
 
-    signature <- matrix(NA,length(indx),4)
-    rownames(signature) <- paste("arm",indx,sep="")
-    colnames(signature) <-c("subgroup1","subgroup2","subgroup3","subgroup4")
+    signature <- matrix(NA,length(indx),4,dimnames = list(paste("arm",indx,sep=""),c("signature1","signature2","signature3","signature4")))
     for(i in 1:(length(indx))){
       for(j in 1:4){
         signature[i,j] <- mean(p_s[i+1,j,]>p_s[1,j,])
       }
     }
+
 
     ## beta1 beta2 被估计为0的概率
     prob_spike <- c(mean(spike1),mean(spike2))
